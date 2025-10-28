@@ -34,10 +34,18 @@ export interface User {
     id: number;
     name: string;
     email: string;
-    avatar?: string;
-    email_verified_at: string | null;
-    two_factor_enabled?: boolean;
-    created_at: string;
-    updated_at: string;
-    [key: string]: unknown; // This allows for additional properties...
+    avatar: string;
+    email_verified_at?: string;
+    // two_factor_enabled?: boolean | nul;
+    // created_at: string | null;
+    // updated_at: string | null;
+    // [key: string]: unknown; // This allows for additional properties...
 }
+
+export type PageProps<
+    T extends Record<string, unknown> = Record<string, unknown>,
+> = T & {
+    auth: {
+        user: User;
+    };
+};
