@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\MenuController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Laravel\Fortify\Features;
@@ -11,6 +12,8 @@ Route::get('/', function(){
 Route::get('/login', function(){
     return Inertia::render('Login');
 });
+
+Route::resource('menu', MenuController::class);
 
 // Route::get('/', function () {
 //     return Inertia::render('welcome', [

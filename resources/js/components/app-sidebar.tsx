@@ -54,10 +54,9 @@ const data = {
             title: 'Dashboard',
             url: '/',
             icon: HomeIcon,
-            isActive: true,
         },
         {
-            title: 'Kelola Menu',
+            title: 'Kelola Pesanan',
             url: '#',
             icon: Bot,
             items: [
@@ -73,7 +72,7 @@ const data = {
         },
         {
             title: 'Kelola Menu',
-            url: '#',
+            url: '/menu',
             icon: BookOpen,
         },
         {

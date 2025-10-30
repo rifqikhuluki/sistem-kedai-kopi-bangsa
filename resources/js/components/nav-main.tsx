@@ -15,6 +15,7 @@ import {
     SidebarMenuSubButton,
     SidebarMenuSubItem,
 } from '@/components/ui/sidebar';
+import { Link, usePage } from '@inertiajs/react';
 
 export function NavMain({
     items,
@@ -23,13 +24,22 @@ export function NavMain({
         title: string;
         url: string;
         icon?: LucideIcon;
-        isActive?: boolean;
         items?: {
             title: string;
             url: string;
         }[];
     }[];
 }) {
+    const { url } = usePage();
+
+    const isUrlActive = (target: string) => {
+        if (!target || target === '#') return false;
+        if (target === '/') return url === '/';
+        return url === target || url.startsWith(target + '/');
+    };
+
+    const isGroupActive = (subitems?: { url: string }[]) =>
+        !!subitems?.some((s) => isUrlActive(s.url));
     return (
         <SidebarGroup>
             <SidebarGroupLabel>Fitur</SidebarGroupLabel>
@@ -40,7 +50,7 @@ export function NavMain({
                         <Collapsible
                             key={item.title}
                             asChild
-                            defaultOpen={item.isActive}
+                            defaultOpen={isGroupActive(item.items)}
                             className="group/collapsible"
                         >
                             <SidebarMenuItem>
@@ -53,16 +63,17 @@ export function NavMain({
                                 </CollapsibleTrigger>
                                 <CollapsibleContent>
                                     <SidebarMenuSub>
-                                        {item.items?.map((subItem) => (
-                                            <SidebarMenuSubItem
-                                                key={subItem.title}
-                                            >
-                                                <SidebarMenuSubButton asChild>
-                                                    <a href={subItem.url}>
-                                                        <span>
-                                                            {subItem.title}
-                                                        </span>
-                                                    </a>
+                                        {item.items?.map((sub) => (
+                                            <SidebarMenuSubItem key={sub.title}>
+                                                <SidebarMenuSubButton
+                                                    asChild
+                                                    isActive={isUrlActive(
+                                                        sub.url,
+                                                    )}
+                                                >
+                                                    <Link href={sub.url}>
+                                                        <span>{sub.title}</span>
+                                                    </Link>
                                                 </SidebarMenuSubButton>
                                             </SidebarMenuSubItem>
                                         ))}
@@ -76,15 +87,15 @@ export function NavMain({
                             <SidebarMenuButton
                                 asChild
                                 tooltip={item.title}
-                                isActive={item.isActive}
+                                isActive={isUrlActive(item.url)}
                             >
-                                <a
+                                <Link
                                     href={item.url}
                                     className="flex items-center gap-2"
                                 >
                                     {item.icon && <item.icon />}
                                     <span>{item.title}</span>
-                                </a>
+                                </Link>
                             </SidebarMenuButton>
                         </SidebarMenuItem>
                     ),

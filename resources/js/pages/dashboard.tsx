@@ -63,7 +63,10 @@ import SummaryCards from '@/components/summary-cards';
 import DataTable from '@/components/table-order';
 import { Button } from '@/components/ui/button';
 import Layout from '@/components/ui/layout';
+import { BreadcrumbItem } from '@/types';
 import { Activity, CreditCard, DollarSign, Filter, Users } from 'lucide-react';
+
+const breadcrumbs: BreadcrumbItem[] = [{ title: 'Dashboard', href: '/' }];
 
 const summaryData = [
     { title: 'Total Revenue', icon: DollarSign, value: '$45,231.89' },
@@ -74,7 +77,7 @@ const summaryData = [
 
 const Dashboard = () => {
     return (
-        <Layout>
+        <Layout breadcrumbs={breadcrumbs}>
             <div className="m-7 flex items-end justify-between">
                 <h1 className="text-3xl font-bold">Dashboard</h1>
 

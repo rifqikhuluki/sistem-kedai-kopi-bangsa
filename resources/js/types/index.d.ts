@@ -48,4 +48,5 @@ export type PageProps<
     auth: {
         user: User;
     };
+    menu: Menu[];
 };
